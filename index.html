@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mondli Nkosi - Cloud Security Analyst, Purple Team practitioner, Microsoft security specialist and security lab builder." />
+  <title>Mondli Nkosi | Cloud Security Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="site-header">
+    <a href="#home" class="brand">mondli<span>.exe</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#certifications">Certs</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact" class="nav-cta">Connect</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-dot"></span> Cloud Security Analyst · Purple Team · Johannesburg</div>
+        <h1>I build security labs that turn <span>identity, telemetry and attacks</span> into detection stories.</h1>
+        <p class="hero-subtitle">
+          I’m Mondli Nkosi — a Cloud Security Analyst focused on Microsoft security, Microsoft Sentinel, Defender XDR, Entra ID, identity security and practical purple-team engineering.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn primary">Explore Projects</a>
+          <a href="https://github.com/MondliC" target="_blank" rel="noreferrer" class="btn secondary">GitHub ↗</a>
+        </div>
+        <div class="hero-metrics">
+          <div><strong>SC-200</strong><span>Certified</span></div>
+          <div><strong>100-Day</strong><span>Cloud Security Challenge</span></div>
+          <div><strong>Microsoft</strong><span>Security Stack</span></div>
+        </div>
+      </div>
+
+      <div class="terminal-card reveal delay-1">
+        <div class="terminal-top">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div>mondli@security-lab:~</div>
+        </div>
+        <div class="terminal-body" id="terminal">
+          <p><span class="prompt">$</span> whoami</p>
+          <p class="output">Mondli Nkosi</p>
+          <p><span class="prompt">$</span> role</p>
+          <p class="output">Cloud Security Analyst / Purple Team</p>
+          <p><span class="prompt">$</span> focus</p>
+          <p class="output">Entra ID · Sentinel · Defender XDR · Identity Threat Hunting</p>
+          <p><span class="prompt">$</span> mission</p>
+          <p class="output typed" id="typed-line"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section split-section">
+      <div class="section-copy reveal">
+        <span class="kicker">01 / About</span>
+        <h2>Security with a builder mindset.</h2>
+        <p>
+          I work across cloud security operations, incident response, detection engineering and identity security. My day-to-day toolkit includes Microsoft Sentinel, KQL, Microsoft Defender XDR, Microsoft Entra ID, Defender for Cloud, Purview and Security Copilot.
+        </p>
+        <p>
+          I learn by building. My projects combine infrastructure, attack simulation, telemetry collection, detection rules, investigation workflows and documented lessons — with an increasing focus on hybrid identity and offensive Azure security.
+        </p>
+      </div>
+      <div class="profile-grid reveal delay-1">
+        <article class="info-card">
+          <span class="icon">◈</span>
+          <h3>Current Role</h3>
+          <p>Cloud Security Analyst (L1)</p>
+        </article>
+        <article class="info-card">
+          <span class="icon">⌁</span>
+          <h3>Direction</h3>
+          <p>Cloud Security Engineer · IAM · Red Team</p>
+        </article>
+        <article class="info-card">
+          <span class="icon">◎</span>
+          <h3>Mindset</h3>
+          <p>Detect → Investigate → Respond → Improve</p>
+        </article>
+        <article class="info-card">
+          <span class="icon">↯</span>
+          <h3>Currently Building</h3>
+          <p>Hybrid AD + Entra ID Purple Team Lab</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-heading reveal">
+        <span class="kicker">02 / Projects</span>
+        <h2>Selected security projects</h2>
+        <p>Hands-on labs designed to show attack paths, detections, investigations and remediation — not just tool screenshots.</p>
+      </div>
+
+      <div class="filters reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="identity">Identity</button>
+        <button class="filter-btn" data-filter="detection">Detection</button>
+        <button class="filter-btn" data-filter="cloud">Cloud</button>
+        <button class="filter-btn" data-filter="offensive">Offensive</button>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card reveal" data-category="identity detection offensive">
+          <div class="project-number">01</div>
+          <div class="project-tags"><span>Active Directory</span><span>Sentinel</span><span>Purple Team</span></div>
+          <h3>Active Directory Purple Team Detection Lab</h3>
+          <p>Enterprise-style AD lab with staged attacks, Windows Security telemetry via AMA, Sentinel analytics rules, MITRE mapping and incident validation.</p>
+          <ul>
+            <li>Controlled authentication failures and password spray scenarios</li>
+            <li>Kerberos-focused detection engineering</li>
+            <li>Investigation evidence and scenario documentation</li>
+          </ul>
+          <button class="expand-btn" data-target="case-ad">View case study</button>
+          <div class="case-study" id="case-ad">
+            <p><strong>Architecture:</strong> Windows Server 2022 domain controller, Kali attacker VM, private Azure networking, AMA, Log Analytics and Microsoft Sentinel.</p>
+            <p><strong>Outcome:</strong> Built and tested multiple analytics rules while learning how raw Windows events translate into SOC detections and investigations.</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal delay-1" data-category="identity cloud offensive">
+          <div class="project-number">02</div>
+          <div class="project-tags"><span>Entra ID</span><span>ROADrecon</span><span>BloodHound</span></div>
+          <h3>Azure Entra ID Attack Path Assessment</h3>
+          <p>Identity and RBAC attack-path assessment using ROADrecon, AzureHound and BloodHound CE to understand cloud privilege relationships and exposure.</p>
+          <ul>
+            <li>Azure RBAC and Entra role mapping</li>
+            <li>Attack path visualization and evidence</li>
+            <li>Detection and remediation planning</li>
+          </ul>
+          <button class="expand-btn" data-target="case-entra">View case study</button>
+          <div class="case-study" id="case-entra">
+            <p><strong>Focus:</strong> Understanding how identity permissions, directory roles and resource-level RBAC combine into exploitable paths.</p>
+            <p><strong>Next evolution:</strong> Hybridize the lab with on-prem AD and Defender for Identity.</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="detection cloud">
+          <div class="project-number">03</div>
+          <div class="project-tags"><span>Cowrie</span><span>Sentinel</span><span>Kill Chain</span></div>
+          <h3>Sentinel + Cowrie Honeypot</h3>
+          <p>SSH honeypot project that collects attacker activity and transforms raw telemetry into a security operations view of adversary behavior.</p>
+          <ul>
+            <li>Microsoft Sentinel ingestion</li>
+            <li>Attack chain visualization</li>
+            <li>Telemetry-led analysis</li>
+          </ul>
+          <a class="project-link" href="https://github.com/MondliC/azure-cowrie-honeypot" target="_blank" rel="noreferrer">View repository ↗</a>
+        </article>
+
+        <article class="project-card reveal delay-1" data-category="detection identity cloud">
+          <div class="project-number">04</div>
+          <div class="project-tags"><span>Token Theft</span><span>Microsoft Cloud</span><span>IR</span></div>
+          <h3>Token Theft Detection & Response</h3>
+          <p>Detection and response project focused on cloud identity token abuse, investigation logic and Microsoft security telemetry.</p>
+          <ul>
+            <li>Identity-centric investigation flow</li>
+            <li>Cloud detection logic</li>
+            <li>Response-focused documentation</li>
+          </ul>
+          <a class="project-link" href="https://github.com/MondliC/Token-Theft" target="_blank" rel="noreferrer">View repository ↗</a>
+        </article>
+
+        <article class="project-card reveal" data-category="offensive">
+          <div class="project-number">05</div>
+          <div class="project-tags"><span>GoPhish</span><span>Kali Linux</span><span>Simulation</span></div>
+          <h3>GoPhish Phishing Simulation</h3>
+          <p>A controlled phishing simulation lab built on Kali Linux to understand campaign setup, user interaction and defensive lessons.</p>
+          <a class="project-link" href="https://github.com/MondliC/GoPhish-Setup-Phishing-Simulation-Kali-Linux-" target="_blank" rel="noreferrer">View repository ↗</a>
+        </article>
+
+        <article class="project-card reveal delay-1" data-category="cloud detection">
+          <div class="project-number">06</div>
+          <div class="project-tags"><span>AWS</span><span>GuardDuty</span><span>Detection</span></div>
+          <h3>AWS GuardDuty Security Lab</h3>
+          <p>Hands-on AWS threat detection practice covering GuardDuty findings, SOC-style analysis and cloud attack/defense exercises.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-heading reveal">
+        <span class="kicker">03 / Skills</span>
+        <h2>Core security stack</h2>
+      </div>
+      <div class="skills-wrap reveal delay-1">
+        <div class="skill-group">
+          <h3>Microsoft Security</h3>
+          <div class="chip-grid">
+            <span>Microsoft Sentinel</span><span>KQL</span><span>Defender XDR</span><span>Defender for Endpoint</span><span>Defender for Identity</span><span>Defender for Cloud</span><span>Microsoft Entra ID</span><span>Purview</span><span>Security Copilot</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Security Operations</h3>
+          <div class="chip-grid">
+            <span>Incident Response</span><span>Threat Hunting</span><span>Detection Engineering</span><span>Log Analysis</span><span>SIEM Operations</span><span>MITRE ATT&CK</span><span>Attack Investigation</span><span>Automation Rules</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Offensive / Purple Team</h3>
+          <div class="chip-grid">
+            <span>Active Directory</span><span>Kali Linux</span><span>ROADrecon</span><span>AzureHound</span><span>BloodHound CE</span><span>Impacket</span><span>GoPhish</span><span>Cloud Attack Paths</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="section">
+      <div class="section-heading reveal">
+        <span class="kicker">04 / Certifications</span>
+        <h2>Certifications & learning path</h2>
+      </div>
+      <div class="cert-grid">
+        <article class="cert-card reveal"><span class="cert-state">Completed</span><h3>SC-200</h3><p>Microsoft Security Operations Analyst</p></article>
+        <article class="cert-card reveal delay-1"><span class="cert-state">Completed</span><h3>SC-900</h3><p>Microsoft Security, Compliance & Identity Fundamentals</p></article>
+        <article class="cert-card reveal"><span class="cert-state">Completed</span><h3>AZ-900</h3><p>Microsoft Azure Fundamentals</p></article>
+        <article class="cert-card reveal delay-1"><span class="cert-state current">In Progress</span><h3>SC-300</h3><p>Microsoft Identity and Access Administrator</p></article>
+        <article class="cert-card reveal"><span class="cert-state">Completed</span><h3>TryHackMe</h3><p>SOC Level 1 · Defending Azure · Attacking & Defending AWS · CTI Apprentice</p></article>
+        <article class="cert-card reveal delay-1"><span class="cert-state future">Next</span><h3>Offensive Track</h3><p>Offensive Azure Security Professional · eJPT · CEH</p></article>
+      </div>
+    </section>
+
+    <section id="journey" class="section journey-section">
+      <div class="section-heading reveal">
+        <span class="kicker">05 / Journey</span>
+        <h2>Learning in public. Building with purpose.</h2>
+      </div>
+      <div class="timeline reveal delay-1">
+        <div class="timeline-item"><span>2025–2026</span><h3>Security foundations</h3><p>Built core SOC and cloud security knowledge through labs, TryHackMe and Microsoft fundamentals.</p></div>
+        <div class="timeline-item"><span>2026</span><h3>Cloud Security Analyst</h3><p>Hands-on exposure to Microsoft Sentinel, Defender XDR, Entra ID, Purview, incident investigations and security operations.</p></div>
+        <div class="timeline-item"><span>2026</span><h3>100-Day Cloud Security Challenge</h3><p>Documented daily progress across detection engineering, cloud security, identity, threat hunting and purple-team labs.</p></div>
+        <div class="timeline-item"><span>Now</span><h3>Hybrid identity + offensive Azure</h3><p>Expanding from cloud defense into hybrid identity attack paths, IAM, red-team tradecraft and consulting-style security assessment work.</p></div>
+      </div>
+    </section>
+
+    <section class="section command-center reveal">
+      <div>
+        <span class="kicker">Current Mission</span>
+        <h2>Become dangerous on both sides of the alert.</h2>
+        <p>Understand the attack deeply enough to simulate it. Understand the telemetry deeply enough to detect it. Understand the business risk well enough to explain it.</p>
+      </div>
+      <div class="mission-list">
+        <div><span>01</span> Pass SC-300</div>
+        <div><span>02</span> Expand hybrid identity lab</div>
+        <div><span>03</span> Build stronger threat hunts</div>
+        <div><span>04</span> Grow toward IAM / Cloud Security Engineering</div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="contact-card reveal">
+        <span class="kicker">06 / Connect</span>
+        <h2>Interested in cloud security, identity or purple teaming?</h2>
+        <p>I share what I’m learning, the labs I’m building and lessons from working in security operations.</p>
+        <div class="contact-actions">
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="btn primary">LinkedIn</a>
+          <a href="https://github.com/MondliC" target="_blank" rel="noreferrer" class="btn secondary">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Mondli Nkosi · Built like a security lab: tested, refined and always evolving.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
