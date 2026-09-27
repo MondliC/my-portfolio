@@ -278,3 +278,130 @@ footer { border-top:1px solid rgba(255,255,255,.06); padding:26px; text-align:ce
   .blog-card.featured { grid-column: auto; }
   .blog-meta { align-items: flex-start; flex-direction: column; }
 }
+
+
+/* Blog article page */
+.article-shell {
+  width: min(920px, 90vw);
+  margin: 0 auto;
+  padding: 140px 0 90px;
+}
+
+.article-page {
+  background: linear-gradient(180deg, rgba(13,31,45,.90), rgba(8,21,31,.95));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(28px, 5vw, 56px);
+  box-shadow: var(--shadow);
+}
+
+.article-header {
+  padding-bottom: 34px;
+  margin-bottom: 38px;
+  border-bottom: 1px solid var(--line);
+}
+
+.article-header h1 {
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -.05em;
+  margin: 14px 0 18px;
+}
+
+.article-deck {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 760px;
+}
+
+.article-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  margin-top: 24px;
+  color: #7e9aaa;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+}
+
+.article-byline a {
+  color: var(--cyan);
+}
+
+.article-page section {
+  margin: 0 0 40px;
+}
+
+.article-page h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0 0 16px;
+  letter-spacing: -.025em;
+}
+
+.article-page h3 {
+  margin: 26px 0 10px;
+  font-size: 1.15rem;
+}
+
+.article-page p,
+.article-page li {
+  color: var(--muted);
+  line-height: 1.82;
+}
+
+.article-page ul {
+  padding-left: 22px;
+}
+
+.article-page strong {
+  color: var(--text);
+}
+
+.article-page code {
+  font-family: 'JetBrains Mono', monospace;
+  color: #8de5ff;
+  background: rgba(56,216,255,.06);
+  border: 1px solid rgba(56,216,255,.12);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.article-page blockquote,
+.article-callout {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--cyan);
+  background: rgba(56,216,255,.05);
+  border-radius: 0 12px 12px 0;
+  color: #d6edf7;
+  line-height: 1.75;
+}
+
+.article-page blockquote {
+  font-size: 1.03rem;
+  font-weight: 600;
+}
+
+.article-callout {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .86rem;
+}
+
+.article-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.article-nav {
+  display: flex;
+}
+
+@media (max-width: 620px) {
+  .article-shell { width: min(94vw, 920px); padding-top: 115px; }
+  .article-page { border-radius: 18px; }
+  .article-nav { gap: 12px; font-size: .78rem; }
+}
