@@ -178,3 +178,103 @@ footer { border-top:1px solid rgba(255,255,255,.06); padding:26px; text-align:ce
   .hero-metrics, .profile-grid, .project-grid, .cert-grid { grid-template-columns:1fr; }
   .command-center { padding:28px 20px; }
 }
+
+
+/* Blog */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.blog-card {
+  background: linear-gradient(180deg, rgba(13,31,45,.88), rgba(8,21,31,.92));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 26px;
+  transition: .25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56,216,255,.35);
+}
+
+.blog-card.featured {
+  grid-column: 1 / -1;
+  background:
+    radial-gradient(circle at top right, rgba(56,216,255,.10), transparent 34%),
+    linear-gradient(180deg, rgba(13,31,45,.92), rgba(8,21,31,.96));
+}
+
+.blog-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #6f8798;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+}
+
+.blog-topic {
+  color: var(--cyan);
+  border: 1px solid rgba(56,216,255,.18);
+  background: rgba(56,216,255,.055);
+  border-radius: 999px;
+  padding: 6px 8px;
+}
+
+.blog-card h3 {
+  font-size: 1.35rem;
+  margin: 6px 0 10px;
+}
+
+.blog-card p,
+.blog-source {
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: .92rem;
+}
+
+.blog-source {
+  margin-top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .76rem;
+}
+
+.blog-takeaways {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.blog-takeaways span {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: #c8dce7;
+  padding: 8px 10px;
+  border-radius: 9px;
+  font-size: .8rem;
+}
+
+.blog-actions {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.blog-actions a {
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: .88rem;
+}
+
+@media (max-width: 620px) {
+  .blog-grid { grid-template-columns: 1fr; }
+  .blog-card.featured { grid-column: auto; }
+  .blog-meta { align-items: flex-start; flex-direction: column; }
+}
