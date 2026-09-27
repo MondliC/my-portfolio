@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mondli Nkosi's notes on Zero Trust architecture with Microsoft Entra ID at the core." />
+  <title>Zero Trust with Entra ID | Mondli Nkosi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="site-header">
+    <a href="index.html#home" class="brand">mondli<span>.exe</span></a>
+    <nav class="nav-links article-nav">
+      <a href="index.html#blog">← Back to Blog</a>
+      <a href="index.html#contact" class="nav-cta">Connect</a>
+    </nav>
+  </header>
+
+  <main class="article-shell">
+    <article class="article-page">
+      <div class="article-header">
+        <span class="kicker">Identity Security / Zero Trust</span>
+        <h1>Zero Trust Architecture with Microsoft Entra at the Core — My Notes</h1>
+        <p class="article-deck">What I took from the article, how it connects to cloud security operations, and what I want to validate in my hybrid identity lab.</p>
+        <div class="article-byline">
+          <span>Mondli Nkosi</span>
+          <span>27 Sep 2026</span>
+          <a href="https://www.windows-active-directory.com/zero-trust-architecture-with-entra-at-the-core.html" target="_blank" rel="noreferrer">Original article ↗</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>Why this article caught my attention</h2>
+        <p>What stood out to me is the idea that Zero Trust is not a product that you simply enable. It is an operating model built around continuously evaluating whether access should be allowed.</p>
+        <p>In a Microsoft environment, Entra ID becomes extremely important because it can sit at the centre of many access decisions across Microsoft 365, Azure, SaaS applications and hybrid environments.</p>
+        <blockquote>“You are inside the network, therefore I trust you” becomes “Prove who you are, prove the device is trustworthy, evaluate the risk, and only then decide what access you should receive.”</blockquote>
+      </section>
+
+      <section>
+        <h2>The Zero Trust loop</h2>
+        <p>The three principles I associate most strongly with Zero Trust are verify explicitly, use least privilege and assume breach.</p>
+        <p><strong>Verify explicitly:</strong> authentication alone is not enough. Access decisions should consider identity, device state, location, application, authentication method, risk signals and session context.</p>
+        <p><strong>Use least privilege:</strong> users and administrators should receive only the access they need, for only as long as they need it.</p>
+        <p><strong>Assume breach:</strong> security architecture should be designed under the assumption that credentials, sessions or endpoints may eventually be compromised.</p>
+        <p>The third principle changes how I think about detections and access controls. Instead of asking only whether an attacker can get in, I also want to know: <strong>if this identity is compromised, how far can the attacker move?</strong></p>
+      </section>
+
+      <section>
+        <h2>Entra ID as the control plane</h2>
+        <p>One of my main takeaways is that Entra can effectively become the identity control plane for Zero Trust. Conditional Access is where much of this becomes practical.</p>
+        <ul>
+          <li>User and group membership</li>
+          <li>Sign-in risk</li>
+          <li>Device compliance</li>
+          <li>Authentication strength</li>
+          <li>Application being accessed</li>
+          <li>Network or location signals</li>
+          <li>Session conditions</li>
+        </ul>
+        <p>The result can then be to allow access, require MFA, require a compliant device, require stronger authentication, apply session restrictions or block access entirely. Identity effectively becomes part of the security perimeter.</p>
+      </section>
+
+      <section>
+        <h2>Privileged access deserves different treatment</h2>
+        <p>Administrator access should not behave like normal user access because privileged identities have a much larger blast radius if compromised.</p>
+        <ul>
+          <li>Dedicated administrative accounts</li>
+          <li>Phishing-resistant authentication</li>
+          <li>Privileged Identity Management</li>
+          <li>Just-in-time elevation</li>
+          <li>Time-limited privileges</li>
+          <li>Strong device requirements</li>
+          <li>Better monitoring and alerting</li>
+        </ul>
+        <p>This connects directly with what I have been learning around Entra roles and Azure RBAC. A user having permanent privileged access creates an attack path even when that privilege is not being actively used.</p>
+        <p>PIM helps change the model from <strong>“this person is always an administrator”</strong> to <strong>“this person is eligible to become an administrator when there is a legitimate reason.”</strong></p>
+      </section>
+
+      <section>
+        <h2>Zero Trust in a hybrid environment</h2>
+        <p>This part is especially relevant to the hybrid identity lab I am building. Moving to Entra does not automatically make Active Directory disappear.</p>
+        <p>Organizations can still depend on Kerberos, NTLM, domain controllers, Group Policy, legacy applications, AD security groups, and domain or forest trusts.</p>
+        <p>An attacker compromising an on-prem identity may still find a route into cloud resources if that identity is synchronized into Entra ID. Likewise, excessive cloud permissions can create attack paths that eventually impact hybrid infrastructure.</p>
+        <p>For me, this reinforces why hybrid identity security needs visibility across both sides:</p>
+        <div class="article-callout">Active Directory activity → Entra authentication → cloud privilege → application/resource access</div>
+        <p>This is also where Defender for Identity, Defender XDR and Sentinel become useful together.</p>
+      </section>
+
+      <section>
+        <h2>MFA does not equal Zero Trust</h2>
+        <p>One misconception I want to avoid is treating MFA as the end goal. MFA is only one control and does not automatically protect against stolen session tokens, excessive permissions, compromised endpoints, OAuth abuse, standing privilege or poor guest lifecycle management.</p>
+        <p>This is especially important when looking at token theft. If an attacker steals an authenticated session, they may not need to perform MFA again.</p>
+      </section>
+
+      <section>
+        <h2>Conditional Access should be treated carefully</h2>
+        <p>A practical operational lesson is to use report-only mode before enforcing Conditional Access policies. A badly designed policy can easily lock out administrators or legitimate users.</p>
+        <div class="article-callout">Design → Report-only → Observe → Pilot → Tune → Enforce</div>
+        <p>I would also make sure break-glass accounts are considered before enforcing large Conditional Access changes.</p>
+      </section>
+
+      <section>
+        <h2>Detection opportunities</h2>
+        <h3>Risky authentication</h3>
+        <p>Look for users with increasing sign-in risk or unusual authentication behaviour using sources such as <code>SigninLogs</code>, <code>AADUserRiskEvents</code> and <code>AADRiskyUsers</code>.</p>
+
+        <h3>Privileged role activity</h3>
+        <p>I would investigate Global Administrator activation, Privileged Role Administrator activity, role assignments outside normal patterns, repeated PIM activations and newly eligible privileged users.</p>
+
+        <h3>Conditional Access failures</h3>
+        <p>Repeated failures can reveal attacker behaviour, for example compromised credentials followed by a device-based block and then repeated access attempts from different locations or sessions.</p>
+
+        <h3>Workload identities</h3>
+        <p>Service principals and managed identities should also be treated as identities. I would monitor new credentials added to applications, new service principals, unexpected consent, unusual workload authentication and high-risk permissions granted to applications.</p>
+      </section>
+
+      <section>
+        <h2>How I would test this in my lab</h2>
+        <h3>Test 1 — Conditional Access enforcement</h3>
+        <p>Create a policy requiring MFA or stronger authentication for privileged accounts, then compare successful authentication, Conditional Access failure, authentication requirements and the resulting Sentinel telemetry.</p>
+
+        <h3>Test 2 — Privileged Identity Management</h3>
+        <p>Replace permanent privileged access with an eligible role and monitor role activation, expiration, audit events and corresponding Sentinel logs.</p>
+
+        <h3>Test 3 — Risk-based access</h3>
+        <p>Generate suspicious sign-in behaviour in a controlled environment and investigate whether risk signals influence Conditional Access decisions.</p>
+
+        <h3>Test 4 — Hybrid identity correlation</h3>
+        <p>Generate authentication activity against the on-prem domain controller and then use the same synchronized identity against Entra resources.</p>
+        <div class="article-callout">Windows Security Events → Defender for Identity → Entra Sign-in Logs → Defender XDR → Sentinel</div>
+      </section>
+
+      <section>
+        <h2>My biggest takeaway</h2>
+        <p>The main lesson I took from this article is that <strong>identity has effectively become one of the most important security control points in modern environments.</strong></p>
+        <p>Zero Trust is not simply MFA, Conditional Access or Defender. It is the combination of identity, device trust, least privilege, risk signals, policy, telemetry and continuous validation.</p>
+        <p>For someone working in cloud security, understanding Entra is therefore not only an IAM skill. It is increasingly a <strong>detection, incident-response and attack-path skill as well.</strong></p>
+      </section>
+
+      <section>
+        <h2>Question I want to explore next</h2>
+        <p><strong>If a synchronized hybrid identity is compromised on-prem, what controls and telemetry can stop or detect the attacker before they successfully pivot into Entra ID and Azure resources?</strong></p>
+        <p>That is something I want to test practically in my hybrid identity lab.</p>
+      </section>
+
+      <div class="article-footer-actions">
+        <a class="btn secondary" href="index.html#blog">← Back to Blog</a>
+        <a class="btn primary" href="https://www.windows-active-directory.com/zero-trust-architecture-with-entra-at-the-core.html" target="_blank" rel="noreferrer">Read Original Article ↗</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <p>© 2026 Mondli Nkosi · Security notes from hands-on learning.</p>
+  </footer>
+</body>
+</html>
