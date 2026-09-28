@@ -15,6 +15,22 @@
 
   const page = location.pathname || '/';
   const referrer = document.referrer || '';
+  const params = new URLSearchParams(location.search);
+  const utmSource = params.get('utm_source') || '';
+  const referralSource = (() => {
+    if (utmSource) return utmSource;
+    if (!referrer) return 'Direct';
+    const r = referrer.toLowerCase();
+    if (r.includes('linkedin')) return 'LinkedIn';
+    if (r.includes('github')) return 'GitHub';
+    if (r.includes('google.')) return 'Google';
+    if (r.includes('bing.')) return 'Bing';
+    if (r.includes('duckduckgo')) return 'DuckDuckGo';
+    if (r.includes('facebook') || r.includes('fb.com')) return 'Facebook';
+    if (r.includes('twitter') || r.includes('x.com')) return 'X / Twitter';
+    if (r.includes('instagram')) return 'Instagram';
+    try { return new URL(referrer).hostname.replace(/^www\\./, ''); } catch (_) { return 'Referral'; }
+  })();
   const ua = navigator.userAgent;
   const device = /Mobi|Android/i.test(ua) ? 'mobile' : /Tablet|iPad/i.test(ua) ? 'tablet' : 'desktop';
 
@@ -63,6 +79,8 @@
       page,
       title: document.title,
       referrer,
+      referral_source: referralSource,
+      utm_source: utmSource,
       device,
       active_seconds: Math.round(state.activeMs / 1000),
       scroll_depth: state.maxScroll,
