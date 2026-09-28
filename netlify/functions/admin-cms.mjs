@@ -23,7 +23,7 @@ export default async(req)=>{
   const headers={apikey:service,Authorization:"Bearer "+service,"Content-Type":"application/json"};
   try{
     if(req.method==="GET"){
-      const r=await fetch(url+"/rest/v1/"+table+"?select=*&order=display_order.asc,created_at.desc",{headers});
+      const order=type==="settings"?"setting_key.asc":"display_order.asc,created_at.desc";const r=await fetch(url+"/rest/v1/"+table+"?select=*&order="+order,{headers});
       if(!r.ok) throw new Error("CMS list failed");
       return json({items:await r.json()});
     }
