@@ -4,7 +4,7 @@ const json = (body, status = 200) =>
     headers: { "Content-Type": "application/json" }
   });
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   const url = Netlify.env.get("SUPABASE_URL");
@@ -21,6 +21,9 @@ export default async (req) => {
     page: String(p.page || "/").slice(0, 300),
     title: String(p.title || "").slice(0, 300),
     referrer: String(p.referrer || "").slice(0, 600),
+    referral_source: String(p.referral_source || "").slice(0, 120),
+    utm_source: String(p.utm_source || "").slice(0, 120),
+    country: String(context?.geo?.country?.name || "").slice(0, 120),
     device: String(p.device || "unknown").slice(0, 30),
     active_seconds: Math.max(0, Math.min(86400, Number(p.active_seconds) || 0)),
     scroll_depth: Math.max(0, Math.min(100, Number(p.scroll_depth) || 0)),
