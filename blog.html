@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Security research notes by Mondli Nkosi." />
+  <title>Security Notes | Mondli Nkosi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="site-header">
+    <a href="index.html#home" class="brand">mondli<span>.exe</span></a>
+    <nav class="nav-links article-nav"><a href="index.html#blog">← Back to Blog</a><a href="index.html#contact" class="nav-cta">Connect</a></nav>
+  </header>
+  <main class="article-shell">
+    <article class="article-page">
+      <div class="article-header">
+        <span id="article-category" class="kicker">Security Notes</span>
+        <h1 id="article-title">Loading article…</h1>
+        <p id="article-summary" class="article-deck"></p>
+        <div class="article-byline"><span>Mondli Nkosi</span><span id="article-date"></span><a id="article-source" target="_blank" rel="noreferrer" hidden>Original article ↗</a></div>
+      </div>
+      <div id="article-content"><p>Loading…</p></div>
+      <div class="article-footer-actions"><a class="btn secondary" href="index.html#blog">← Back to Blog</a></div>
+    </article>
+  </main>
+  <footer><p>© 2026 Mondli Nkosi · Security notes from hands-on learning.</p></footer>
+  <script>
+  (async()=>{const slug=new URLSearchParams(location.search).get('slug');if(!slug){document.getElementById('article-title').textContent='Article not found';return}
+    try{const r=await fetch('/.netlify/functions/cms-public?type=blog&slug='+encodeURIComponent(slug)),d=await r.json(),x=d.item;if(!r.ok||!x)throw 0;
+      document.title=x.title+' | Mondli Nkosi';document.getElementById('article-title').textContent=x.title;document.getElementById('article-summary').textContent=x.summary||'';document.getElementById('article-category').textContent=x.category||'Security Notes';document.getElementById('article-date').textContent=x.published_at?new Date(x.published_at).toLocaleDateString('en-ZA',{day:'2-digit',month:'short',year:'numeric'}):'';const src=document.getElementById('article-source');if(x.source_url){src.href=x.source_url;src.hidden=false}document.getElementById('article-content').innerHTML=x.content||'<p>Article content is being prepared.</p>';
+    }catch{document.getElementById('article-title').textContent='Article not found';document.getElementById('article-content').innerHTML='<p>This article is unavailable.</p>'}})();
+  </script>
+  <script src="analytics.js"></script>
+</body>
+</html>
