@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mondli Nkosi's notes on service principal ownership abuse, Entra ID attack paths, workload identities and detection engineering." />
+  <title>Service Principal Ownership Abuse in Entra ID | Mondli Nkosi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="site-header">
+    <a href="index.html#home" class="brand">mondli<span>.exe</span></a>
+    <nav class="nav-links article-nav">
+      <a href="index.html#blog">← Back to Blog</a>
+      <a href="index.html#contact" class="nav-cta">Connect</a>
+    </nav>
+  </header>
+
+  <main class="article-shell">
+    <article class="article-page">
+      <div class="article-header">
+        <span class="kicker">Entra ID / Attack Paths / Workload Identity</span>
+        <h1>Service Principal Ownership Abuse in Entra ID — My Notes</h1>
+        <p class="article-deck">What I learned from a Semperis EntraGoat scenario showing how ownership of a privileged service principal can turn a low-privileged compromise into a much more serious identity attack path.</p>
+        <div class="article-byline">
+          <span>Mondli Nkosi</span>
+          <span>28 Sep 2026</span>
+          <a href="https://www.semperis.com/blog/service-principal-ownership-abuse-in-entra-id/" target="_blank" rel="noreferrer">Original article ↗</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>Why this scenario caught my attention</h2>
+        <p>I have been spending more time looking at attack paths in Microsoft Entra ID, especially relationships that are easy to miss when we focus only on users, groups and traditional administrator roles.</p>
+        <p>This Semperis EntraGoat scenario stood out because it shows how a configuration that looks legitimate on its own can become a privilege-escalation path when ownership and application privilege are combined.</p>
+        <p>The scenario starts with a compromised low-privileged user. The important detail is what that user owns: a service principal with meaningful privilege.</p>
+      </section>
+
+      <section>
+        <h2>The attack path</h2>
+        <p>The attack can be simplified to:</p>
+        <div class="article-callout">Compromised user → Owned service principal → Add application credential → Authenticate as service principal → Abuse privileged role → Compromise a privileged account</div>
+        <p>The attacker does not necessarily need to compromise another user password. Instead, they pivot from a human identity into a workload identity.</p>
+      </section>
+
+      <section>
+        <h2>Why service principal ownership matters</h2>
+        <p>A service principal is the security identity an application uses inside an Entra tenant. It can hold permissions, directory roles and credentials of its own.</p>
+        <p>Ownership is a legitimate administrative feature. Developers and application teams often need to manage applications without involving a tenant administrator for every change.</p>
+        <p>The risk appears when a low-privileged user owns a service principal that has powerful permissions or roles.</p>
+        <div class="article-callout">Standard user → owns → Service principal → assigned → Privileged Entra capability</div>
+        <p>Looking only at the user may not reveal anything unusual. Looking at the relationship graph tells a different story.</p>
+      </section>
+
+      <section>
+        <h2>The move from user identity to workload identity</h2>
+        <p>One of the most useful lessons from the scenario is the distinction between delegated user access and app-only access.</p>
+        <p>A normal interactive user session can be evaluated using controls such as MFA, Conditional Access and user risk. A service principal can authenticate using application credentials such as a certificate or client secret and operate using its own identity.</p>
+        <div class="article-callout">Attacker → Compromised user → Owned service principal → Application credentials → Privileged workload identity</div>
+        <p>This matters because workload identities do not behave like normal users, and user-centric protections do not automatically remove the risk.</p>
+      </section>
+
+      <section>
+        <h2>The defender lesson: privilege is a graph</h2>
+        <p>My biggest takeaway is that privilege should not be evaluated one identity at a time.</p>
+        <p>A standard user may have no administrator role and still participate in a path that eventually reaches privileged access.</p>
+        <p>Relationships worth assessing include:</p>
+        <ul>
+          <li>Service principal ownership</li>
+          <li>Application ownership</li>
+          <li>Group ownership and membership</li>
+          <li>Directory role assignment</li>
+          <li>Microsoft Graph application permissions</li>
+          <li>Azure RBAC assignments</li>
+          <li>PIM eligibility</li>
+        </ul>
+        <p>Individually, some of these can look harmless. Combined, they can form an attack path.</p>
+      </section>
+
+      <section>
+        <h2>What I would hunt for</h2>
+        <h3>1. Users who own privileged service principals</h3>
+        <p>Regular users owning applications should not automatically be treated as malicious. The useful question is whether a low-privileged user owns an application identity that has dangerous permissions or roles.</p>
+
+        <h3>2. New credentials added to applications</h3>
+        <p>Adding a client secret or certificate changes who can authenticate as an application. I would investigate unexpected credential additions, especially when the target service principal is privileged.</p>
+
+        <h3>3. Privileged workload identities</h3>
+        <p>I would want an inventory that ties together owners, credentials, Microsoft Graph permissions, directory roles and recent authentication activity for service principals.</p>
+
+        <h3>4. Ownership changes</h3>
+        <p>Ownership changes around privileged applications are security-relevant. I would ask who added the owner, whether the relationship was expected, and whether credential creation or application authentication followed shortly afterwards.</p>
+      </section>
+
+      <section>
+        <h2>Detection hypothesis</h2>
+        <blockquote>If a low-privileged identity owns a privileged service principal and then modifies its credentials, that combination could indicate an attempt to pivot from a user identity into a more privileged workload identity.</blockquote>
+        <p>The interesting detection opportunity is therefore not necessarily one event. It is the sequence:</p>
+        <div class="article-callout">User → owns → Privileged service principal → Credential added → Service principal authenticates → Privileged directory operation</div>
+        <p>That turns individual audit records into an attack story.</p>
+      </section>
+
+      <section>
+        <h2>How this fits into my Entra ID lab</h2>
+        <p>This scenario fits directly into the Entra attack-path work I am already doing with ROADrecon, AzureHound, BloodHound CE, Microsoft Sentinel and Defender XDR.</p>
+        <p>The question I want to move toward is not simply:</p>
+        <blockquote>Which users are administrators?</blockquote>
+        <p>It is:</p>
+        <blockquote>Which relationships could eventually allow an identity to reach administrative privilege?</blockquote>
+        <p>A lab scenario could deliberately create:</p>
+        <div class="article-callout">LAB-USER → owns → LAB-ANALYTICS-SP → privileged relationship → Sensitive Entra capability</div>
+        <p>Then I can assess how the relationship appears across the graphing tools and what telemetry is produced when the path is abused in a controlled way.</p>
+      </section>
+
+      <section>
+        <h2>Purple-team workflow I want to test</h2>
+        <div class="article-callout">Build the misconfiguration → Enumerate the relationship → Identify the attack path → Simulate controlled abuse → Collect telemetry → Hunt in Sentinel / Defender XDR → Create detection logic → Remediate → Retest</div>
+        <p>The goal is not only to prove the attack works. The more useful question is whether the security team would detect the sequence early enough to stop it.</p>
+      </section>
+
+      <section>
+        <h2>Remediation considerations</h2>
+        <ul>
+          <li>Regularly review service principal ownership.</li>
+          <li>Remove unnecessary owners.</li>
+          <li>Review privileged directory roles assigned to service principals.</li>
+          <li>Audit high-risk Microsoft Graph application permissions.</li>
+          <li>Monitor application credential creation.</li>
+          <li>Remove stale secrets and certificates.</li>
+          <li>Decommission unused applications.</li>
+          <li>Improve governance around workload identities.</li>
+          <li>Investigate unusual app-only authentication activity.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>My biggest takeaway</h2>
+        <p><strong>Ownership is part of privilege.</strong></p>
+        <p>An identity does not need to directly hold an administrator role to be dangerous. Sometimes the real risk exists several relationships away.</p>
+        <div class="article-callout">User → Ownership → Application → Credential control → Privileged identity → Tenant impact</div>
+        <p>Attack-path analysis forces us to look at identity as a graph instead of a flat list of roles and permissions.</p>
+        <p>For defenders working with Entra ID, that mindset is increasingly important as environments accumulate more applications, automation identities, service principals and hybrid identity relationships.</p>
+      </section>
+
+      <section>
+        <h2>Question I want to explore next</h2>
+        <p><strong>Can I detect the transition from a compromised human identity to a privileged workload identity before the attacker performs the final privileged action?</strong></p>
+        <p>That is the part I want to test practically in my lab.</p>
+      </section>
+
+      <div class="article-footer-actions">
+        <a class="btn secondary" href="index.html#blog">← Back to Blog</a>
+        <a class="btn primary" href="https://www.semperis.com/blog/service-principal-ownership-abuse-in-entra-id/" target="_blank" rel="noreferrer">Read Original Article ↗</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <p>© 2026 Mondli Nkosi · Security notes from hands-on learning.</p>
+  </footer>
+  <script src="analytics.js"></script>
+</body>
+</html>
