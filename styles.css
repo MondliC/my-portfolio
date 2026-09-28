@@ -581,3 +581,24 @@ footer { border-top:1px solid rgba(255,255,255,.06); padding:26px; text-align:ce
 .recruiter-grid span{font-size:.72rem;color:var(--muted)}
 @media(max-width:900px){.admin-metrics{grid-template-columns:repeat(2,1fr)}.recruiter-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.admin-metrics,.recruiter-grid{grid-template-columns:1fr}}
+
+
+/* Lightweight CMS */
+.admin-tabs,.cms-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.admin-tab,.cms-tab{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+.admin-tab.active,.cms-tab.active{background:var(--cyan);color:#051018;border-color:transparent}
+.cms-layout{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.4fr);gap:14px}
+.cms-list{display:grid;gap:8px}
+.cms-item{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);color:#d8e8ef;border-radius:11px;padding:12px 13px;cursor:pointer}
+.cms-item small{color:#708b9b;font-family:'JetBrains Mono',monospace;font-size:.66rem}
+.cms-item.active,.cms-item:hover{border-color:rgba(56,216,255,.35);background:rgba(56,216,255,.055)}
+.cms-form,.cms-form #cms-fields{display:grid;gap:14px}
+.cms-form label{display:grid;gap:7px;color:#cfe2ec;font-size:.82rem}
+.cms-form input,.cms-form textarea{width:100%;color:var(--text);background:#091722;border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none;font:inherit}
+.cms-form textarea{resize:vertical;line-height:1.55}
+.cms-form input:focus,.cms-form textarea:focus{border-color:rgba(56,216,255,.55)}
+.cms-check{display:flex!important;grid-template-columns:auto 1fr!important;align-items:center;gap:9px!important}
+.cms-check input{width:auto}
+.cms-actions{display:flex;gap:10px;align-items:center;margin-top:8px}
+.admin-ghost-btn.danger{color:#ff9b9b;border-color:rgba(255,120,120,.25)}
+@media(max-width:900px){.cms-layout{grid-template-columns:1fr}}
