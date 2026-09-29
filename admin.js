@@ -22,7 +22,8 @@ function fieldHtml([key,label,type],v){
  const val=v?.[key]??'';
  if(type==='checkbox')return '<label class="cms-check"><input name="'+key+'" type="checkbox" '+(val?'checked':'')+'> '+esc(label)+'</label>';
  if(type==='textarea'||type==='lines')return '<label>'+esc(label)+'<textarea name="'+key+'" rows="'+(key==='content'?10:5)+'">'+esc(type==='lines'&&Array.isArray(val)?val.join('\n'):val)+'</textarea></label>';
- if(type==='csv')return '<label>'+esc(label)+'<input name="'+key+'" value="'+esc(Array.isArray(val)?val.join(', '):val)+'"></label>';\n if(type==='date'){const dateVal=val?String(val).slice(0,10):(cmsType==='blogs'&&key==='published_at'?new Date().toISOString().slice(0,10):'');return '<label>'+esc(label)+'<input name="'+key+'" type="date" value="'+esc(dateVal)+'"></label>';}
+ if(type==='csv')return '<label>'+esc(label)+'<input name="'+key+'" value="'+esc(Array.isArray(val)?val.join(', '):val)+'"></label>';
+ if(type==='date'){const dateVal=val?String(val).slice(0,10):(cmsType==='blogs'&&key==='published_at'?new Date().toISOString().slice(0,10):'');return '<label>'+esc(label)+'<input name="'+key+'" type="date" value="'+esc(dateVal)+'"></label>';}
  return '<label>'+esc(label)+'<input name="'+key+'" type="'+type+'" value="'+esc(val)+'"></label>';
 }
 function renderForm(item=null){cmsCurrent=item;$('cms-editor-title').textContent=item?'Edit '+labels[cmsType]:'New '+labels[cmsType];$('cms-state').textContent=item?(item.published===false?'Draft':'Saved'):'Unsaved';$('cms-fields').innerHTML=schemas[cmsType].map(f=>fieldHtml(f,item)).join('');$('cms-delete').hidden=!item}
