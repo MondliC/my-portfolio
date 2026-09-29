@@ -10,7 +10,7 @@ async function loadStats(){statusEl.textContent='Loading…';try{const d=await a
 
 let cmsType='blogs',cmsItems=[],cmsCurrent=null;
 const schemas={
- blogs:[['title','Title','text'],['slug','Slug','text'],['summary','Summary','textarea'],['content','Article content (HTML supported)','textarea'],['category','Category','text'],['tags','Tags (comma separated)','csv'],['source_name','Source name','text'],['source_url','Source URL','url'],['published','Published','checkbox'],['featured','Featured','checkbox'],['display_order','Display order','number']],
+ blogs:[['title','Title','text'],['slug','Slug','text'],['published_at','Date','date'],['summary','Summary','textarea'],['content','Article content (HTML supported)','textarea'],['category','Category','text'],['tags','Tags (comma separated)','csv'],['source_name','Source name','text'],['source_url','Source URL','url'],['published','Published','checkbox'],['featured','Featured','checkbox'],['display_order','Display order','number']],
  projects:[['title','Title','text'],['slug','Slug','text'],['description','Description','textarea'],['category','Category filters','text'],['technologies','Technologies (comma separated)','csv'],['bullets','Key points (one per line)','lines'],['github_url','GitHub URL','url'],['case_study','Case study','textarea'],['status','Status','text'],['published','Published','checkbox'],['featured','Featured','checkbox'],['display_order','Display order','number']],
  certifications:[['name','Name','text'],['provider','Provider','text'],['description','Description','textarea'],['status','Status','text'],['credential_url','Credential URL','url'],['published','Published','checkbox'],['display_order','Display order','number']],
  highlights:[['label','Highlight text','text'],['published','Published','checkbox'],['display_order','Display order','number']],
@@ -22,7 +22,7 @@ function fieldHtml([key,label,type],v){
  const val=v?.[key]??'';
  if(type==='checkbox')return '<label class="cms-check"><input name="'+key+'" type="checkbox" '+(val?'checked':'')+'> '+esc(label)+'</label>';
  if(type==='textarea'||type==='lines')return '<label>'+esc(label)+'<textarea name="'+key+'" rows="'+(key==='content'?10:5)+'">'+esc(type==='lines'&&Array.isArray(val)?val.join('\n'):val)+'</textarea></label>';
- if(type==='csv')return '<label>'+esc(label)+'<input name="'+key+'" value="'+esc(Array.isArray(val)?val.join(', '):val)+'"></label>';
+ if(type==='csv')return '<label>'+esc(label)+'<input name="'+key+'" value="'+esc(Array.isArray(val)?val.join(', '):val)+'"></label>';\n if(type==='date'){const dateVal=val?String(val).slice(0,10):(cmsType==='blogs'&&key==='published_at'?new Date().toISOString().slice(0,10):'');return '<label>'+esc(label)+'<input name="'+key+'" type="date" value="'+esc(dateVal)+'"></label>';}
  return '<label>'+esc(label)+'<input name="'+key+'" type="'+type+'" value="'+esc(val)+'"></label>';
 }
 function renderForm(item=null){cmsCurrent=item;$('cms-editor-title').textContent=item?'Edit '+labels[cmsType]:'New '+labels[cmsType];$('cms-state').textContent=item?(item.published===false?'Draft':'Saved'):'Unsaved';$('cms-fields').innerHTML=schemas[cmsType].map(f=>fieldHtml(f,item)).join('');$('cms-delete').hidden=!item}
