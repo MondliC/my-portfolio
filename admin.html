@@ -1,5 +1,21 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>mondli.exe | Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head><body class="admin-body"><div class="noise"></div><header class="admin-header"><a href="/" class="brand">mondli<span>.exe</span></a><div class="admin-header-actions"><span id="admin-status" class="admin-status">Disconnected</span><button id="logout-btn" class="admin-ghost-btn" hidden>Sign out</button></div></header><main class="admin-shell"><section id="login-panel" class="admin-login-card"><span class="kicker">Private Admin</span><h1>Portfolio command center</h1><p>Sign in to manage your portfolio content.</p><form id="login-form" class="admin-login-form"><label>Email<input id="email" type="email" autocomplete="email" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button class="btn primary" type="submit">Sign in</button><p id="login-message" class="admin-message"></p></form></section><section id="dashboard" hidden>
 <section id="content-view" class="admin-view"><div class="admin-title-row"><div><span class="kicker">Lightweight CMS</span><h1>Manage portfolio content</h1></div></div>
-<div class="cms-tabs"><button class="cms-tab active" data-type="blogs">Blog Posts</button><button class="cms-tab" data-type="projects">Projects</button><button class="cms-tab" data-type="certifications">Certifications</button><button class="cms-tab" data-type="highlights">Highlights</button><button class="cms-tab" data-type="settings">Site Settings</button></div>
+<div class="cms-tabs"><button class="cms-tab active" data-type="blogs">Blog Posts</button><button class="cms-tab" data-type="projects">Projects</button><button class="cms-tab" data-type="certifications">Certifications</button><button class="cms-tab" data-type="highlights">Highlights</button><button class="cms-tab" data-type="settings">Site Settings</button><button class="cms-tab" id="media-tab" data-type="media">Media</button></div>
 <div class="cms-layout"><section class="admin-panel"><div class="admin-panel-head"><h2 id="cms-list-title">Blog Posts</h2><button id="cms-new" class="admin-ghost-btn">+ New</button></div><div id="cms-list" class="cms-list"></div></section><section class="admin-panel"><div class="admin-panel-head"><h2 id="cms-editor-title">Editor</h2><span id="cms-state">Select an item</span></div><form id="cms-form" class="cms-form"><div id="cms-fields"></div><div class="cms-actions"><button class="btn primary" type="submit">Save</button><button id="cms-delete" class="admin-ghost-btn danger" type="button" hidden>Delete</button></div><p id="cms-message" class="admin-message"></p></form></section></div>
-</section></section></main><script src="admin.js"></script></body></html>
+</section>
+<section id="media-view" class="admin-view" hidden>
+  <div class="admin-title-row"><div><span class="kicker">Supabase Storage</span><h1>Media Library</h1></div></div>
+  <section class="admin-panel media-upload-panel">
+    <div class="admin-panel-head"><h2>Upload image</h2><span>PNG · JPG · WEBP · GIF · max 10 MB</span></div>
+    <form id="media-upload-form" class="media-upload-form">
+      <input id="media-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required>
+      <button class="btn primary" type="submit">Upload image</button>
+      <p id="media-message" class="admin-message"></p>
+    </form>
+  </section>
+  <section class="admin-panel">
+    <div class="admin-panel-head"><h2>Your media</h2><button id="media-refresh" class="admin-ghost-btn" type="button">Refresh</button></div>
+    <div id="media-grid" class="media-grid"></div>
+  </section>
+</section>
+</section></main><script src="admin.js"></script></body></html>
